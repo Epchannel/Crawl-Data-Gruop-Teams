@@ -65,7 +65,7 @@ if __name__ == "__main__":
     # Thông số params cho thread
     thread_params = {
         "view": "msnp24Equivalent",
-        "pageSize": 4,
+        "pageSize": 10, # Số phải lớn hơn 4
         "selectMemberRoles": "User|Guest",
         "filterExplicitlyAdded": False
     }
@@ -90,5 +90,11 @@ if __name__ == "__main__":
             # Lấy hồ sơ ngắn gọn của các thành viên
             member_profiles = fetch_member_profiles(profile_url, headers=profile_headers, member_ids=member_ids)
 
-            for member in member_profiles:
-                print(member)
+            # Mở tệp tin để ghi với mã Unicode
+            with open('user_info.txt', 'w', encoding='utf-8') as file:
+                # Trong vòng lặp for member in member_profiles
+                for member in member_profiles:
+                    user_principal_name = member.get('userPrincipalName')
+                    display_name = member.get('displayName')
+                    print(f"{user_principal_name}|{display_name}") # In ra màn hình
+                    #file.write(f"{user_principal_name}|{display_name}\n") # Lưu vào file txt
